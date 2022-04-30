@@ -5,9 +5,12 @@ on:
     branches:
       - master
 
+env:
+  HEROKU_EMAIL: arlwinkarlfajardo@gmail.com
+
 jobs:
 
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -34,11 +37,10 @@ jobs:
       - name: Build Application
         run: ./build.sh
 
-      - name: Check Directory
-        run: |
-          
-          echo "backend"
-          ls backend
-
-          echo "static files"
-          ls backend/src/main/resources/static/
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "jadotaweb"
+          heroku_email: ${{ env.HEROKU_EMAIL }}
+          appdir: "backend"
