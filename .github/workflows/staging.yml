@@ -1,0 +1,44 @@
+name: Staging
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: 'gradle'
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: frontend
+        run: npm install
+
+      - name: Build Application
+        run: ./build.sh
+
+      - name: Check Directory
+        run: |
+          
+          echo "backend"
+          ls backend
+
+          echo "static files"
+          ls backend/src/main/resources/static/
