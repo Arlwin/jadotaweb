@@ -3,54 +3,47 @@
     <v-app-bar
       app
       color="primary"
+      dense
+      flat
       dark
+      class="px-7"
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-app-bar-title >
+        <span class="text-h5">J</span>
+        <span class="text-overline">ust </span>
+        <span class="text-h5">A</span>
+        <span class="text-overline">nother </span>
+        <span class="text-h5 font-weight-bold red--text text--lighten-2">DOTA </span>
+        <span class="text-h5">W</span>
+        <span class="text-overline">ebsite</span>
+      </v-app-bar-title>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+      <v-btn icon>
+        <v-icon class="px-3">mdi-magnify</v-icon>
+      </v-btn>
+      <v-btn text>
+        <span class="px-3">Sign-In</span>
       </v-btn>
     </v-app-bar>
 
-    <v-main>
-      <HelloWorld/>
+    <v-main class="px-7">
+      <HomeView/>
+      <!-- <span class="text-h1">J</span> -->
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import HomeView from './components/views/HomeView.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    HomeView,
   },
 
   data: () => ({

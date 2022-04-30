@@ -9,5 +9,5 @@ cd ..
 cp -r frontend/dist/* backend/src/main/resources/static/.
 
 # Build gradle
-cd backend
-./gradlew build --no-daemon
+# cd backend
+# ./gradlew build --no-daemon
