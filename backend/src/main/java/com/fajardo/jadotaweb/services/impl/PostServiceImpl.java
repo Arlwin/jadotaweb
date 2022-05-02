@@ -1,9 +1,9 @@
 package com.fajardo.jadotaweb.services.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fajardo.jadotaweb.dao.Post;
-import com.fajardo.jadotaweb.dao.User;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.repositories.PostRepository;
 import com.fajardo.jadotaweb.services.PostService;
@@ -11,6 +11,8 @@ import com.fajardo.jadotaweb.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import reactor.core.publisher.Flux;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -45,6 +47,12 @@ public class PostServiceImpl implements PostService {
     public Post getPost(String postId) {
         
         return this.postRepository.findById(postId).block();
+    }
+
+    @Override
+    public Flux<Post> getPosts() {
+        
+        return this.postRepository.findAll();
     }
 
     private Post transformRequest(PostsRequest post){

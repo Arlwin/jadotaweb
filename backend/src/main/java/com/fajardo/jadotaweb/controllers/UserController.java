@@ -23,10 +23,9 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> getPost(@RequestBody User user){
+    public ResponseEntity<String> createUser(@RequestBody User user){
 
         String userId = userService.addUser(user);
-
         return ResponseEntity.ok(userId);
     }
 }
