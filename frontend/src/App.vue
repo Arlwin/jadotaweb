@@ -28,20 +28,20 @@
 
     <v-main>
       <v-container>
-        <HomeView/>
+        <Home/>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HomeView from './components/views/HomeView.vue';
+import Home from './views/Home.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HomeView,
+    Home,
   },
 
   data: () => ({

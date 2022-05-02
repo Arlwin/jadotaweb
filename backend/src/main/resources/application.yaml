@@ -1,2 +1,13 @@
 url:
   opendota: https://api.opendota.com/api
+
+spring:
+  cloud:
+    gcp:
+      project-id: jadotaweb
+      credentials:
+        encoded-key: ${GCP_ENCODED_KEY}
+
+server:
+  servlet:
+    context-path: /api/v1
