@@ -21,17 +21,15 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        <v-icon class="px-3">mdi-magnify</v-icon>
-      </v-btn>
       <v-btn text>
         <span class="px-3">Sign-In</span>
       </v-btn>
     </v-app-bar>
 
-    <v-main class="px-7">
-      <HomeView/>
-      <!-- <span class="text-h1">J</span> -->
+    <v-main>
+      <v-container>
+        <HomeView/>
+      </v-container>
     </v-main>
   </v-app>
 </template>
