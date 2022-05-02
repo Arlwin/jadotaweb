@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: 'http://localhost:8080/api/v1'
+    baseURL: "https://127.0.0.1/api/v1"
 });
+
+console.log(process.env.PORT);
 
 export default client
