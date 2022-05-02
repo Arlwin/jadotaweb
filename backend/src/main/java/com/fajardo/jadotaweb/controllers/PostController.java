@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController()
-@RequestMapping("/posts")
+@RequestMapping("${api.base}/posts")
 public class PostController {
     
     PostService postService;
@@ -37,9 +36,6 @@ public class PostController {
     public ResponseEntity<PostsResponse> getPost(@PathVariable String postId){
 
         Post post = postService.getPost(postId);
-
-        log.info(post.getUserId());
-
         User user = userService.getUser(post.getUserId());
 
         if (post == null || user == null) return ResponseEntity.notFound().build();

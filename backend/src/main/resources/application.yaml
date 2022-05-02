@@ -8,6 +8,5 @@ spring:
       credentials:
         encoded-key: ${GCP_ENCODED_KEY}
 
-server:
-  servlet:
-    context-path: /api/v1
+api: 
+  base: /api/v1
