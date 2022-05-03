@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const client = axios.create({
-    baseURL: "https://127.0.0.1/api/v1"
+    baseURL: process.env.VUE_APP_API_BASE_URL
 });
 
 console.log(process.env.PORT);
