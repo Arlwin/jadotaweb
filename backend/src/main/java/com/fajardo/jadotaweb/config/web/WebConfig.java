@@ -41,7 +41,7 @@ public class WebConfig implements WebMvcConfigurer  {
     private OncePerRequestFilter createRedirectFilter() {
         return new OncePerRequestFilter() {
             // Forwards all routes except '/index.html', '/200.html', '/favicon.ico', '/sw.js' '/api/', '/api/**'
-            private final String REGEX = "(?!/actuator|/api|/_nuxt|/static|/index\\.html|/200\\.html|/favicon\\.ico|/sw\\.js).*$";
+            private final String REGEX = "(?!/actuator|/api|/_nuxt|/static|/index\\.html|/200\\.html|/favicon\\.ico|/js|/css).*$";
             private Pattern pattern = Pattern.compile(REGEX);
             @Override
             protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
