@@ -9,14 +9,16 @@
       class="px-7"
     >
 
-      <v-app-bar-title >
-        <span class="text-h5">J</span>
-        <span class="text-overline">ust </span>
-        <span class="text-h5">A</span>
-        <span class="text-overline">nother </span>
-        <span class="text-h5 font-weight-bold red--text text--lighten-2">DOTA </span>
-        <span class="text-h5">W</span>
-        <span class="text-overline">ebsite</span>
+      <v-app-bar-title>
+        <v-btn text v-ripple="false" :to="{ name: 'Home' }" id = "logo">
+          <span class="text-h5">J</span>
+          <span class="text-overline">ust </span>
+          <span class="text-h5">A</span>
+          <span class="text-overline">nother </span>
+          <span class="text-h5 font-weight-bold red--text text--lighten-2">DOTA </span>
+          <span class="text-h5">W</span>
+          <span class="text-overline">ebsite</span>
+        </v-btn>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>
@@ -50,3 +52,10 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+#logo::before {
+  display: none !important;
+}
+
+</style>
