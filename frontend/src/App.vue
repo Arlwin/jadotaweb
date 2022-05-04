@@ -10,7 +10,7 @@
     >
 
       <v-app-bar-title>
-        <v-btn text v-ripple="false" :to="{ name: 'Home' }" id = "logo">
+        <v-btn text v-ripple="false" :to="{ name: 'Home' }" class="no-hover">
           <span class="text-h5">J</span>
           <span class="text-overline">ust </span>
           <span class="text-h5">A</span>
@@ -23,38 +23,39 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text>
+      <v-btn text @click.stop="signInDialog = true" v-ripple="false" class="no-hover">
         <span class="px-3">Sign-In</span>
       </v-btn>
     </v-app-bar>
 
     <v-main>
       <v-container>
-        <!-- <Home/> -->
         <router-view />
       </v-container>
     </v-main>
+
+    <SignInDialog v-model="signInDialog" />
   </v-app>
 </template>
 
 <script>
-// import Home from './views/Home.vue';
+import SignInDialog from './components/auth/SignInDialog.vue';
 
 export default {
   name: 'App',
-
   components: {
-    // Home,
+    SignInDialog,
   },
-
   data: () => ({
-    //
+    signInDialog: false,
   }),
+  computed: {
+  },
 };
 </script>
 
 <style scoped>
-#logo::before {
+.no-hover::before {
   display: none !important;
 }
 

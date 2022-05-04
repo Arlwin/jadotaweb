@@ -1,6 +1,7 @@
 package com.fajardo.jadotaweb.services.impl;
 
 import com.fajardo.jadotaweb.dao.User;
+import com.fajardo.jadotaweb.models.users.NewUserRequest;
 import com.fajardo.jadotaweb.repositories.UserRepository;
 import com.fajardo.jadotaweb.services.UserService;
 
@@ -22,6 +23,12 @@ public class UserServiceImpl implements UserService {
     public String addUser(User user) {
 
         return this.userRepository.save(user).block().getId();
+    }
+    
+    @Override
+    public String addUser(NewUserRequest user) {
+
+        return "tets";
     }
 
     @Override
