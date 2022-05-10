@@ -2,8 +2,8 @@ package com.fajardo.jadotaweb.models.posts;
 
 import java.util.Date;
 
-import com.fajardo.jadotaweb.dao.Post;
-import com.fajardo.jadotaweb.dao.User;
+import com.fajardo.jadotaweb.entities.Post;
+import com.fajardo.jadotaweb.entities.User;
 
 public class PostsResponse {
     

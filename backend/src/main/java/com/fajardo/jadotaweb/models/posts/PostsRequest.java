@@ -3,7 +3,6 @@ package com.fajardo.jadotaweb.models.posts;
 public class PostsRequest {
     
     private String title;
-    private String userId;
     private String coverImgUrl;
     private String text;
     
@@ -12,12 +11,6 @@ public class PostsRequest {
     }
     public void setTitle(String title) {
         this.title = title;
-    }
-    public String getUserId() {
-        return userId;
-    }
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
     public String getCoverImgUrl() {
         return coverImgUrl;

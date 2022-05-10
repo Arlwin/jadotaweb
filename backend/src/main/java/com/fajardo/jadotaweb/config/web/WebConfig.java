@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class WebConfig implements WebMvcConfigurer  {
 
+    @Value("${api.base}")
+    private String baseUrl;
+
+    @Bean("baseUrl")
+    public String getBaseUrl(){
+        return baseUrl;
+    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
-
     
     @Bean
     public FilterRegistrationBean spaRedirectFiler() {

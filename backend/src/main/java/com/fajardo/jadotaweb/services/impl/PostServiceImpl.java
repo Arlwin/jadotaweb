@@ -3,7 +3,8 @@ package com.fajardo.jadotaweb.services.impl;
 import java.util.Date;
 import java.util.List;
 
-import com.fajardo.jadotaweb.dao.Post;
+import com.fajardo.jadotaweb.entities.Post;
+import com.fajardo.jadotaweb.entities.User;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.repositories.PostRepository;
 import com.fajardo.jadotaweb.services.PostService;
@@ -38,9 +39,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String createPost(PostsRequest post) {
+    public String createPost(PostsRequest post, String userId) {
 
-        return this.postRepository.save(transformRequest(post)).block().getId();
+        // Get user details first
+        User user = userService.getUser(userId);
+
+        return this.postRepository.save(transformRequest(post, user)).block().getId();
     }
 
     @Override
@@ -55,14 +59,12 @@ public class PostServiceImpl implements PostService {
         return this.postRepository.findAll();
     }
 
-    private Post transformRequest(PostsRequest post){
-
-        if (!userService.isUserExists(post.getUserId())) return null;
+    private Post transformRequest(PostsRequest post, User user){
 
         Post postDao = new Post(
             post.getTitle(), 
             new Date(), 
-            post.getUserId(), 
+            user.getId(), 
             1, 
             post.getCoverImgUrl(), 
             post.getText()

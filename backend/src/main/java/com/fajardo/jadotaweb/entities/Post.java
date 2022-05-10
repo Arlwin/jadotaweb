@@ -1,4 +1,4 @@
-package com.fajardo.jadotaweb.dao;
+package com.fajardo.jadotaweb.entities;
 
 import java.util.Date;
 

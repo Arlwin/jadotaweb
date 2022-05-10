@@ -1,6 +1,6 @@
 package com.fajardo.jadotaweb.repositories;
 
-import com.fajardo.jadotaweb.dao.Post;
+import com.fajardo.jadotaweb.entities.Post;
 
 import org.springframework.cloud.gcp.data.firestore.FirestoreReactiveRepository;
 

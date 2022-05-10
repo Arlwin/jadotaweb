@@ -1,6 +1,6 @@
 package com.fajardo.jadotaweb.controllers;
 
-import com.fajardo.jadotaweb.dao.User;
+import com.fajardo.jadotaweb.entities.User;
 import com.fajardo.jadotaweb.models.users.NewUserRequest;
 import com.fajardo.jadotaweb.services.UserService;
 
