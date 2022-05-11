@@ -7,6 +7,11 @@ import com.google.cloud.firestore.annotation.PropertyName;
 
 import org.springframework.cloud.gcp.data.firestore.Document;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+
+@AllArgsConstructor
+@EqualsAndHashCode
 @Document(collectionName = "posts")
 public class Post {
     

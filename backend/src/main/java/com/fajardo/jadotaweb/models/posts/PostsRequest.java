@@ -1,29 +1,23 @@
 package com.fajardo.jadotaweb.models.posts;
 
+import javax.validation.constraints.NotNull;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostsRequest {
     
+    @NotNull(message = "Title is required")
     private String title;
-    private String coverImgUrl;
-    private String text;
-    
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getCoverImgUrl() {
-        return coverImgUrl;
-    }
-    public void setCoverImgUrl(String coverImgUrl) {
-        this.coverImgUrl = coverImgUrl;
-    }
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
 
-    
+    private String coverImgUrl;
+
+    @NotNull(message = "Text content is required")
+    private String text;
 }

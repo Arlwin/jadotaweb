@@ -5,6 +5,13 @@ import com.google.cloud.firestore.annotation.DocumentId;
 
 import org.springframework.cloud.gcp.data.firestore.Document;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 @Document(collectionName = "users")
 public class User {
     

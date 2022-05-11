@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public String addUser(NewUserRequest newUser) {
-
+        
         // Add to Firestore first
         String uid = this.userFactory.createUser(newUser);
 
@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isUserExists(String userId) {
+        
         return this.userRepository.existsById(userId).block();
     }
 }

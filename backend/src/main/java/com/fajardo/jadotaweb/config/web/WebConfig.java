@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
-public class WebConfig implements WebMvcConfigurer  {
+public class WebConfig implements WebMvcConfigurer {
 
     @Value("${api.base}")
     private String baseUrl;

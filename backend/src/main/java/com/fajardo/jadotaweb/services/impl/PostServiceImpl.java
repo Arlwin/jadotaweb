@@ -41,10 +41,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public String createPost(PostsRequest post, String userId) {
 
+        Date submitDate = new Date();
+
         // Get user details first
         User user = userService.getUser(userId);
-
-        return this.postRepository.save(transformRequest(post, user)).block().getId();
+        return this.postRepository.save(transformRequest(post, user, submitDate)).block().getId();
     }
 
     @Override
@@ -59,11 +60,11 @@ public class PostServiceImpl implements PostService {
         return this.postRepository.findAll();
     }
 
-    private Post transformRequest(PostsRequest post, User user){
+    public Post transformRequest(PostsRequest post, User user, Date submitDate){
 
         Post postDao = new Post(
             post.getTitle(), 
-            new Date(), 
+            submitDate, 
             user.getId(), 
             1, 
             post.getCoverImgUrl(), 

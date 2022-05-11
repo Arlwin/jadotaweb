@@ -5,6 +5,15 @@ import java.util.Date;
 import com.fajardo.jadotaweb.entities.Post;
 import com.fajardo.jadotaweb.entities.User;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PostsResponse {
     
     private String id;
@@ -17,8 +26,6 @@ public class PostsResponse {
     private String coverImgUrl;
     private String text;
 
-    public PostsResponse(){}
-
     public PostsResponse(Post post, User user){
 
         this.id = post.getId();
@@ -30,55 +37,4 @@ public class PostsResponse {
         this.coverImgUrl = post.getCoverImgUrl();
         this.text = post.getText();
     }
-
-    public String getId() {
-        return id;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public Date getSubmitDate() {
-        return submitDate;
-    }
-    public void setSubmitDate(Date submitDate) {
-        this.submitDate = submitDate;
-    }
-    public User getUser() {
-        return user;
-    }
-    public void setUserId(User user) {
-        this.user = user;
-    }
-    public long getLikes() {
-        return likes;
-    }
-    public void setLikes(long likes) {
-        this.likes = likes;
-    }
-    public String getCoverImgUrl() {
-        return coverImgUrl;
-    }
-    public void setCoverImgUrl(String coverImgUrl) {
-        this.coverImgUrl = coverImgUrl;
-    }
-    public String getText() {
-        return text;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    
 }

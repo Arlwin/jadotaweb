@@ -27,8 +27,6 @@ public class FirestoreUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        log.info("kiseki");
-
         User user = userRepository.findByUsername(username).blockFirst();
         return new SecurityUser(user);
     }

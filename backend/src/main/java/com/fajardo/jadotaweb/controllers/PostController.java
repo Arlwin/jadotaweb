@@ -3,6 +3,8 @@ package com.fajardo.jadotaweb.controllers;
 import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.fajardo.jadotaweb.entities.Post;
 import com.fajardo.jadotaweb.entities.User;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
@@ -28,7 +30,7 @@ import reactor.core.publisher.Flux;
 @Slf4j
 @RestController()
 @RequestMapping("${api.base}/posts")
-public class PostController {
+public class PostController extends BaseController {
     
     PostService postService;
     UserService userService;
@@ -51,18 +53,18 @@ public class PostController {
     public ResponseEntity<PostsResponse> getPost(@PathVariable String postId){
 
         Post post = postService.getPost(postId);
-        User user = userService.getUser(post.getUserId());
+        
+        if (post == null) return ResponseEntity.notFound().build();
 
-        if (post == null || user == null) return ResponseEntity.notFound().build();
+        User user = userService.getUser(post.getUserId());
 
         return ResponseEntity.ok(new PostsResponse(post, user));
     }
 
     @PostMapping()
-    public ResponseEntity<String> createPost(@RequestBody PostsRequest post, Authentication authentication){
+    public ResponseEntity<String> createPost(@Valid @RequestBody PostsRequest post, Authentication authentication){
         
         String postId = postService.createPost(post, ((SecurityUser) authentication.getPrincipal()).getId());
-
         return ResponseEntity.ok(postId);
     }
 }
