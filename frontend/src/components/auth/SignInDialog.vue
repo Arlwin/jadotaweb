@@ -286,6 +286,8 @@ export default {
             }
           );
 
+        console.log(userRes); // Save this to pinia
+
       } catch (error) {
 
         console.log(error);
