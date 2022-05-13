@@ -105,6 +105,8 @@
 </template>
 
 <script>
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+
 import SignInDialogConfirmation from './SignInDialogConfirmation.vue';
 
 export default {
@@ -251,19 +253,48 @@ export default {
         .then((response) => {
 
           console.log(response); // Use this for caching
+
           this.loading = false;
           this.signInDialogConfirmation = true;
         });
     },
-    signInUser() {
+    async signInUser() {
 
-      this.signInDialogConfirmation = true;
+      try {
+
+        // Get JWT
+        var token = await signInWithEmailAndPassword(
+          getAuth(),
+          this.form.fields['email'].value, 
+          this.form.fields['password'].value
+          )
+          .then(
+            userResult => {
+              return userResult.user.getIdToken()
+            }
+          )
+          .then(idToken => idToken)
+
+        // Send JWT to Spring
+        var userRes = await this.$http
+          .get(
+            '/users/login',
+            {
+              headers: {
+                'Authorization': `Bearer ${token}` 
+              }
+            }
+          );
+
+      } catch (error) {
+
+        console.log(error);
+      }
+
+      this.show = false;
       this.loading = false;
     },
     passwordsMatch(v) {
-
-      console.log(v);
-      console.log(this.getPassword);
 
       if (v && v == this.getPassword) return true;
       return "Password does not match";

@@ -1,12 +1,11 @@
 package com.fajardo.jadotaweb.controllers;
 
-import java.security.Principal;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import com.fajardo.jadotaweb.entities.Post;
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
+import com.fajardo.jadotaweb.models.posts.CreatePostResponse;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.models.posts.PostsResponse;
 import com.fajardo.jadotaweb.models.security.SecurityUser;
@@ -14,7 +13,6 @@ import com.fajardo.jadotaweb.services.PostService;
 import com.fajardo.jadotaweb.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,15 +54,34 @@ public class PostController extends BaseController {
         
         if (post == null) return ResponseEntity.notFound().build();
 
-        User user = userService.getUser(post.getUserId());
+        User user = null;
+        try {
+
+            user = userService.getUser(post.getUserId());
+        } catch (InvalidUserException e){
+
+            user = null;
+        }
 
         return ResponseEntity.ok(new PostsResponse(post, user));
     }
 
     @PostMapping()
-    public ResponseEntity<String> createPost(@Valid @RequestBody PostsRequest post, Authentication authentication){
+    public ResponseEntity<CreatePostResponse> createPost(@Valid @RequestBody PostsRequest post, Authentication authentication){
         
-        String postId = postService.createPost(post, ((SecurityUser) authentication.getPrincipal()).getId());
-        return ResponseEntity.ok(postId);
+        ResponseEntity<CreatePostResponse> resEntity = null;
+
+        try {
+
+            String postId = postService.createPost(post, ((SecurityUser) authentication.getPrincipal()).getId());
+            resEntity = ResponseEntity.ok(
+                new CreatePostResponse(postId, "Create Post Success")
+            );
+        } catch (InvalidUserException e) {
+
+            resEntity = ResponseEntity.badRequest().body(new CreatePostResponse(null, "Post Creation Fail: " + e.getMessage()));
+        }
+
+        return resEntity;
     }
 }

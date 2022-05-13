@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.factories.UserFactory;
 import com.fajardo.jadotaweb.models.users.NewUserRequest;
 import com.fajardo.jadotaweb.repositories.UserRepository;
@@ -74,14 +75,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUser_userIdExists_user(){
+    public void getUser_userIdExists_user() throws InvalidUserException{
 
         User user = userService.getUser(testUser.getId());
         assertEquals(user, testUser);
     }
 
     @Test
-    public void getUser_userIdNotExists_null(){
+    public void getUser_userIdNotExists_null() throws InvalidUserException{
 
         User user = userService.getUser("invalid_id");
         assertNull(user);

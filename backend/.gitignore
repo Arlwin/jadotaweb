@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### Assets
-./src/main/resources/static/**
+src/main/resources/static/**

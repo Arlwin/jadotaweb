@@ -8,6 +8,8 @@ import com.fajardo.jadotaweb.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.extern.slf4j.Slf4j;
+
 public class SecurityUser implements UserDetails {
 
     private User user;

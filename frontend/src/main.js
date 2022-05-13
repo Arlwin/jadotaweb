@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import router from './router'
+
 import client from './services/api'
 import format_date from './mixins/date'
+
+import vuetify from './plugins/vuetify'
+import pinia from './plugins/pinia'
+import router from './router'
+
+import { initializeApp, setLogLevel } from "firebase/app";
+import firebaseConfig from './config/firebase'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = client;
@@ -14,9 +20,12 @@ Vue.mixin({
   }
 })
 
+initializeApp(firebaseConfig);
+setLogLevel('warn');
+
 new Vue({
   vuetify,
   router,
-  render: h => h(App)
-
+  render: h => h(App),
+  pinia
 }).$mount('#app')

@@ -1,10 +1,10 @@
 package com.fajardo.jadotaweb.services.impl;
 
 import java.util.Date;
-import java.util.List;
 
 import com.fajardo.jadotaweb.entities.Post;
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.repositories.PostRepository;
 import com.fajardo.jadotaweb.services.PostService;
@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public String createPost(PostsRequest post, String userId) {
+    public String createPost(PostsRequest post, String userId) throws InvalidUserException{
 
         Date submitDate = new Date();
 

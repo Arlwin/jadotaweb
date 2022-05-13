@@ -9,6 +9,7 @@ import java.util.Date;
 
 import com.fajardo.jadotaweb.entities.Post;
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.repositories.PostRepository;
 import com.fajardo.jadotaweb.services.impl.PostServiceImpl;
@@ -61,7 +62,7 @@ public class PostServiceTest {
     );
 
     @BeforeEach
-    public void init() {
+    public void init() throws InvalidUserException {
 
         when(postRepository.save(testPost)).thenReturn(Mono.just(testPost));
         when(postRepository.save(any(Post.class))).thenReturn(Mono.just(testPost));
@@ -79,7 +80,7 @@ public class PostServiceTest {
     }
 
     @Test
-    public void createPost_validPostRequestAndValidUserId_postId() {
+    public void createPost_validPostRequestAndValidUserId_postId() throws InvalidUserException {
 
         String postId = postService.createPost(testPostRequest, testUser.getId());
         assertEquals(testPost.getId(), postId);
