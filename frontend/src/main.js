@@ -8,7 +8,7 @@ import vuetify from './plugins/vuetify'
 import pinia from './plugins/pinia'
 import router from './router'
 
-import { initializeApp, setLogLevel } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import firebaseConfig from './config/firebase'
 
 Vue.config.productionTip = false
@@ -21,7 +21,6 @@ Vue.mixin({
 })
 
 initializeApp(firebaseConfig);
-setLogLevel('warn');
 
 new Vue({
   vuetify,

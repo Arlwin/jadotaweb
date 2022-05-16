@@ -23,7 +23,8 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn text @click.stop="signInDialog = true" v-ripple="false" class="no-hover">
+      <v-btn v-if="isUserLoggedIn" text >{{ currentUser.username }}</v-btn>
+      <v-btn v-else text @click.stop="signInDialog = true" v-ripple="false" class="no-hover">
         <span class="px-3">Sign-In</span>
       </v-btn>
     </v-app-bar>
@@ -39,6 +40,9 @@
 </template>
 
 <script>
+import { mapState } from 'pinia'
+
+import { userStore } from '@/stores/UserStore'
 import SignInDialog from './components/auth/SignInDialog.vue';
 
 export default {
@@ -50,6 +54,7 @@ export default {
     signInDialog: false,
   }),
   computed: {
+    ...mapState(userStore, ['currentUser', 'isUserLoggedIn']),
   },
 };
 </script>

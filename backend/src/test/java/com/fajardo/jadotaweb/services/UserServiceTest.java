@@ -46,13 +46,12 @@ public class UserServiceTest {
         .setEmail("test_email@gmail.com")
         .setUsername("test_username")
         .setFirstName("test_firstName")
-        .setLastName("test_lastName")
-        .setPassword("test_Password");
+        .setLastName("test_lastName");
 
     NewUserRequest testNewUser = new NewUserRequest(
         testUser.getEmail(),
         testUser.getUsername(),
-        testUser.getPassword()
+        "test_Password"
     );
 
     @BeforeEach

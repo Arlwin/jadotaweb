@@ -94,9 +94,7 @@
             </v-list-item>
           </v-card>
         </div>
-        
       </v-card-text>
-
       <v-progress-linear indeterminate v-if="loading"/>
     </v-card>
 
@@ -106,6 +104,9 @@
 
 <script>
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import { mapActions } from 'pinia'
+
+import { userStore } from '@/stores/UserStore'
 
 import SignInDialogConfirmation from './SignInDialogConfirmation.vue';
 
@@ -223,9 +224,10 @@ export default {
     formValid: function () {
 
       return this.form.valid;
-    }
+    },
   },
   methods: {
+    ...mapActions(userStore, { saveUserState: 'login' }),
     formSubmit() {
 
       if (!this.form.valid) return;
@@ -286,7 +288,8 @@ export default {
             }
           );
 
-        console.log(userRes); // Save this to pinia
+        var userDetails = userRes['data']['user'];
+        this.saveUserState(userDetails['id'], userDetails['username']);
 
       } catch (error) {
 
@@ -306,7 +309,6 @@ export default {
       this.show = false;
     },
   },
-
 }
 </script>
 

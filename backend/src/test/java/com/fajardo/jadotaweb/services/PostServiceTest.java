@@ -41,7 +41,6 @@ public class PostServiceTest {
         .id("testUserId")
         .email("testEmail")
         .username("testUsername")
-        .password("testPassword")
         .build();
 
     Post testPost = new Post(

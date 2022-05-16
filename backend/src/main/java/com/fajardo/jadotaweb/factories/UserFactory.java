@@ -25,7 +25,7 @@ public class UserFactory {
             new User()
                 .setEmail(user.getEmail())
                 .setUsername(user.getUsername())
-                .setPassword(passwordEncoder.encode(user.getPassword()))
+                // .setPassword(passwordEncoder.encode(user.getPassword()))
         )
         .block()
         .getId();

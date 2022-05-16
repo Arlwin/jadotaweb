@@ -72,8 +72,7 @@ public class UserServiceImpl implements UserService {
 
             throw InvalidUserException.USER_DOES_NOT_EXIST(userId);
         }
-
-        user.setPassword(null); // Make sure password will not be passed
+        
         return user;
     }
 

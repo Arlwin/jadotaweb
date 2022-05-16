@@ -22,7 +22,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
 
     // Helpers
 
@@ -32,7 +31,6 @@ public class User {
         
         this.username = newUserRequest.getUsername();
         this.email = newUserRequest.getEmail();
-        this.password = newUserRequest.getPassword();
     }
 
     public String getId() {
@@ -68,13 +66,6 @@ public class User {
     }
     public User setEmail(String email) {
         this.email = email;
-        return this;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public User setPassword(String password) {
-        this.password = password;
         return this;
     }
 }

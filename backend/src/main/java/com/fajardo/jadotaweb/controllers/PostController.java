@@ -8,7 +8,6 @@ import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.models.posts.CreatePostResponse;
 import com.fajardo.jadotaweb.models.posts.PostsRequest;
 import com.fajardo.jadotaweb.models.posts.PostsResponse;
-import com.fajardo.jadotaweb.models.security.SecurityUser;
 import com.fajardo.jadotaweb.services.PostService;
 import com.fajardo.jadotaweb.services.UserService;
 
@@ -73,7 +72,7 @@ public class PostController extends BaseController {
 
         try {
 
-            String postId = postService.createPost(post, ((SecurityUser) authentication.getPrincipal()).getId());
+            String postId = postService.createPost(post, authentication.getPrincipal().toString());
             resEntity = ResponseEntity.ok(
                 new CreatePostResponse(postId, "Create Post Success")
             );
