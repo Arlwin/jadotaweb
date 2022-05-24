@@ -13,12 +13,6 @@ public class BaseController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public HttpErrorResponse handleValidationExceptions(MethodArgumentNotValidException ex) {
 
-        // ex.getBindingResult().getAllErrors().forEach((error) -> {
-        //     String fieldName = ((FieldError) error).getField();
-        //     String errorMessage = error.getDefaultMessage();
-        //     errors.put(fieldName, errorMessage);
-        // });
-        
         return HttpErrorResponse.builder()
             .error(HttpStatus.BAD_REQUEST.name())
             .message(ex.getFieldError().getDefaultMessage())

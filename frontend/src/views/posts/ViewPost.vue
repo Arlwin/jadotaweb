@@ -2,13 +2,15 @@
   <v-container class="pa-7 mx-auto" fluid>
 
     <v-btn 
+      class="no-hover px-0"
+      v-ripple="false" 
       text 
       plain
       @click="$router.go(-1)"
     >
       <v-icon>mdi-arrow-left-thin</v-icon> 
       Back to Home
-    </v-btn><br>
+    </v-btn><br><br>
 
     <div v-if="data_loading">
       <v-skeleton-loader
@@ -152,5 +154,10 @@ export default {
 
   height: 100px !important;
 }
+
+.no-hover::before {
+  display: none !important;
+}
+
 
 </style>

@@ -1,7 +1,10 @@
 package com.fajardo.jadotaweb.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
+import com.fajardo.jadotaweb.exceptions.user.InvalidNewUserException;
 import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.models.users.LoginUserRequest;
 import com.fajardo.jadotaweb.models.users.LoginUserResponse;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,23 +42,30 @@ public class UserController extends BaseController {
     @PostMapping("/signup")
     public ResponseEntity<NewUserResponse> createUser(@Valid @RequestBody NewUserRequest user){
 
-        String userId = null;
-
+        ResponseEntity<NewUserResponse> res = null;
+        
         try {
 
-            userId = userService.addUser(user);
+            String userId = userService.addUser(user);
+            
+            res = ResponseEntity.ok(
+                NewUserResponse.builder()
+                    .userId(userId)
+                    .message("User created successfully")
+                    .build()
+            );
+
         } catch (NullPointerException e) {
 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } catch (InvalidNewUserException e) {
+
+            res = ResponseEntity.badRequest().body(
+                NewUserResponse.builder().message(e.getMessage()).build()
+            );
         }
 
-        return ResponseEntity.ok(
-            NewUserResponse.builder()
-                .userId(userId)
-                .message("User created successfully")
-                .build()
-        );
-
+        return res;
     }
 
     @GetMapping("/login")
@@ -77,5 +88,26 @@ public class UserController extends BaseController {
         }   
 
         return resEntity;
+    }
+
+    // Utils
+    @GetMapping("/validate")
+    public ResponseEntity<Boolean> validateField(
+        @RequestParam Optional<String> email,
+        @RequestParam Optional<String> username
+    ){
+
+        // Prioritize Email
+        if (email.isPresent()) {
+
+            return ResponseEntity.ok(userService.isEmailExists(email.get()));
+        }
+
+        if (username.isPresent()) {
+
+            return ResponseEntity.ok(userService.isUsernameExists(username.get()));
+        } 
+
+        return ResponseEntity.badRequest().build();
     }
 }

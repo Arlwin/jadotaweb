@@ -2,7 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Home from '../views/Home.vue'
+
+// Posts
 import ViewPost from '../views/posts/ViewPost.vue'
+import CreatePost from '../views/posts/CreatePost.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +23,11 @@ const routes = [
     path: '/posts/:post_id',
     name: 'ViewPost',
     component: ViewPost
+  },
+  {
+    path: '/newPost',
+    name: 'CreatePost',
+    component: CreatePost
   },
   {
     path: '/about',

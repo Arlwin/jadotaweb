@@ -1,6 +1,7 @@
 package com.fajardo.jadotaweb.services.impl;
 
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidNewUserException;
 import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.factories.UserFactory;
 import com.fajardo.jadotaweb.models.users.LoginUserRequest;
@@ -40,8 +41,20 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public String addUser(NewUserRequest newUser) {
+    public String addUser(NewUserRequest newUser) throws InvalidNewUserException {
         
+        // Check if username exists
+        if (isUsernameExists(newUser.getUsername())) {
+
+            throw InvalidNewUserException.USER_ALREADY_EXISTS("Username");
+        }
+
+        // Check if email exists
+        if (isEmailExists(newUser.getEmail())) {
+
+            throw InvalidNewUserException.USER_ALREADY_EXISTS("Email");
+        }
+
         // Add to Firestore first
         String uid = this.userFactory.createUser(newUser);
 
@@ -81,4 +94,18 @@ public class UserServiceImpl implements UserService {
         
         return this.userRepository.existsById(userId).block();
     }
+
+    @Override
+    public Boolean isEmailExists(String email) {
+
+        return this.userRepository.findByEmail(email).blockFirst() != null;
+    }
+
+    @Override
+    public Boolean isUsernameExists(String username) {
+        
+        return this.userRepository.findByUsername(username).blockFirst() != null;
+    }
+
+    
 }

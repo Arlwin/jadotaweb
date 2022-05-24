@@ -35,7 +35,7 @@
             v-model="form.fields.username.value"
             :type="form.fields.username.type"
             :rules="form.fields.username.rules"
-            counter
+            :counter="form.fields.username.max"
           />
           
           <v-text-field 
@@ -62,6 +62,14 @@
             :append-icon="form.fields.confirmPassword.show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="form.fields.confirmPassword.show = !form.fields.confirmPassword.show"
           />
+
+          <v-row v-if="!showSignUp && signInIncorrect" class="d-flex flex-row justify-center align-center px-4">
+            <span class="red--text text--darken-3">{{ signIn.incorrect }}</span>
+          </v-row>
+
+          <v-row v-if="showSignUp && signUpInvalid" class="d-flex flex-row justify-center align-center px-4">
+            <span class="red--text text--darken-3">{{ signUp.invalid }}</span>
+          </v-row>
           
           <v-row class="d-flex flex-row justify-space-between align-center mb-3 px-4">
             <span class="text-caption">{{ dialogText.subtext1 }} <a @click="() => {this.signUpState = !this.signUpState}">{{ dialogText.subtext2 }}</a></span>
@@ -119,6 +127,8 @@ export default {
     value: Boolean,
   },
   data: function() {
+
+    var maxUsernameCount = 16;
   
     return {
 
@@ -127,13 +137,17 @@ export default {
 
         header: "Sign Up",
         subtext1: "Already have an account? ",
-        subtext2: "Sign in instead "
+        subtext2: "Sign in instead ",
+        isInvalid: false,
+        invalid: "",
       },
       signIn: {
 
         header: "Sign In",
         subtext1: "Don't have an account yet? ",
-        subtext2: "Sign up instead "
+        subtext2: "Sign up instead ",
+        incorrect: "Email / Password is incorrect",
+        isIncorrect: false,
       },
       form: {
         valid: true,
@@ -153,9 +167,10 @@ export default {
             name: 'username',
             value: '',
             label: 'Username',
+            max: maxUsernameCount,
             rules: [
               v => !!v || 'Username is required',
-              v => (v && v.length <= 16) || 'Username must be less than 16 characters',
+              v => (v && v.length <= maxUsernameCount) || 'Username must be less than 16 characters',
             ]
           },
           password: {
@@ -204,7 +219,8 @@ export default {
         return this.value
       },
       set (value) {
-          this.$emit('input', value)
+        this.signIn.isIncorrect = false;
+        this.$emit('input', value)
       }
     },
     showSignUp: function () {
@@ -225,6 +241,18 @@ export default {
 
       return this.form.valid;
     },
+    signInIncorrect: function () {
+
+      return this.signIn.isIncorrect;
+    },
+    signUpInvalid: function () {
+
+      return this.signUp.isInvalid;
+    },
+    signUpInvalidMessage: function () {
+
+      return this.signUp.invalid;
+    },
   },
   methods: {
     ...mapActions(userStore, { saveUserState: 'login' }),
@@ -238,7 +266,7 @@ export default {
       else this.signInUser();
 
     },
-    signUpUser() {
+    async signUpUser() {
 
       var user = {
 
@@ -247,28 +275,53 @@ export default {
         'password': this.form.fields['password'].value
       }
 
-      this.$http
-        .post(
-          '/users/signup', 
-          user
-        )
-        .then((response) => {
+      try {
 
-          console.log(response); // Use this for caching
+        await this.$http
+          .post(
+            '/users/signup', 
+            user
+          )
+          .then(response => response);
+      } catch (e) {
 
+        if (e['code'] == "ERR_BAD_REQUEST") {
+
+          this.signUp.isInvalid = true;
+          this.signUp.invalid = e['response']['data']['message'];
           this.loading = false;
-          this.signInDialogConfirmation = true;
-        });
+        }
+        
+        return;
+      }
+
+      await this.authenticateUser(user.email, user.password);
+      this.$emit('refresh');
+
+      return;
     },
     async signInUser() {
 
+      if (await this.authenticateUser(this.form.fields['email'].value, this.form.fields['password'].value)) {
+        
+        this.show = false;
+        this.signIn.isIncorrect = false;
+        this.$emit('refresh');
+      } else {
+
+        this.signIn.isIncorrect = true;
+      }
+
+      this.loading = false;
+    },
+    async authenticateUser(email, password) {
+
       try {
 
-        // Get JWT
         var token = await signInWithEmailAndPassword(
           getAuth(),
-          this.form.fields['email'].value, 
-          this.form.fields['password'].value
+          email, 
+          password
           )
           .then(
             userResult => {
@@ -291,13 +344,11 @@ export default {
         var userDetails = userRes['data']['user'];
         this.saveUserState(userDetails['id'], userDetails['username']);
 
-      } catch (error) {
+        return true;
+      } catch (e) {
 
-        console.log(error);
+        return false;
       }
-
-      this.show = false;
-      this.loading = false;
     },
     passwordsMatch(v) {
 
@@ -307,6 +358,7 @@ export default {
     confirmClose(){
 
       this.show = false;
+      this.$emit('refresh');
     },
   },
 }

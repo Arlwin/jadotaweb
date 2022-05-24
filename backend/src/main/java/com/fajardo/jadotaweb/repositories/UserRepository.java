@@ -9,4 +9,5 @@ import reactor.core.publisher.Flux;
 public interface UserRepository extends FirestoreReactiveRepository<User>{
     
     Flux<User> findByUsername(String username);
+    Flux<User> findByEmail(String email);
 }

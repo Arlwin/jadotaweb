@@ -13,15 +13,12 @@ export const userStore = defineStore('userStore', {
     },
     getters: {
         isUserLoggedIn(state) {
-            
-            return state.loggedIn || localStorage['userId'];
+            return state.loggedIn || (localStorage['user'] && JSON.parse(localStorage['user'])['loggedIn']);
         },
         currentUser(state) {
-            
-            return {
-                userId: state.user.userId ?? localStorage['userId'],
-                username: state.user.username ?? localStorage['username']
-            };
+
+            if (state.user && state.user.userId && state.user.username) return state.user
+            return JSON.parse(localStorage['user']);
         },
     },
     actions: {
@@ -31,8 +28,7 @@ export const userStore = defineStore('userStore', {
             this.user.username = username;
             this.user.loggedIn = true;
 
-            localStorage.setItem('userId', this.user.userId);
-            localStorage.setItem('username', this.user.username);
+            localStorage.setItem('user', JSON.stringify(this.user));
         },
     },
 })

@@ -23,19 +23,38 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn v-if="isUserLoggedIn" text >{{ currentUser.username }}</v-btn>
-      <v-btn v-else text @click.stop="signInDialog = true" v-ripple="false" class="no-hover">
+      <v-btn v-if="isUserLoggedIn" 
+        text 
+        v-ripple="false" 
+        class="no-hover" 
+        @click.stop="logout"
+      >
+        <span class="px-3">{{ currentUser['username'] }}</span>
+      </v-btn>
+      <v-btn v-else 
+        text 
+        @click.stop="signInDialog = true" 
+        v-ripple="false" 
+        class="no-hover" 
+      >
         <span class="px-3">Sign-In</span>
       </v-btn>
     </v-app-bar>
 
     <v-main>
-      <v-container>
-        <router-view />
+      <v-container fluid>
+        <v-row>
+          <v-col cols = 2 />
+          <v-col>
+            <router-view />
+          </v-col>
+          <v-col cols = 2 />
+        </v-row>
+        
       </v-container>
     </v-main>
 
-    <SignInDialog v-model="signInDialog" />
+    <SignInDialog v-model="signInDialog" @refresh="refresh"/>
   </v-app>
 </template>
 
@@ -55,6 +74,17 @@ export default {
   }),
   computed: {
     ...mapState(userStore, ['currentUser', 'isUserLoggedIn']),
+  },
+  methods: {
+    refresh() {
+
+      location.reload();
+    },
+    logout() { // TEMP
+
+      localStorage.clear();
+      location.reload();
+    },
   },
 };
 </script>

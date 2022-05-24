@@ -9,6 +9,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.fajardo.jadotaweb.entities.User;
+import com.fajardo.jadotaweb.exceptions.user.InvalidNewUserException;
 import com.fajardo.jadotaweb.exceptions.user.InvalidUserException;
 import com.fajardo.jadotaweb.factories.UserFactory;
 import com.fajardo.jadotaweb.models.users.NewUserRequest;
@@ -24,6 +25,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @ExtendWith(SpringExtension.class)
@@ -62,6 +64,8 @@ public class UserServiceTest {
         when(userRepository.findById("invalid_id")).thenReturn(Mono.empty());
         when(userRepository.existsById(testUser.getId())).thenReturn(Mono.just(true));
         when(userRepository.existsById("invalid_id")).thenReturn(Mono.just(false));
+        when(userRepository.findByUsername(testNewUser.getUsername())).thenReturn(Flux.empty());
+        when(userRepository.findByEmail(testNewUser.getEmail())).thenReturn(Flux.empty());
         when(userFactory.createUser(any(NewUserRequest.class))).thenReturn(testUser.getId());
         when(firebaseAuth.createUser(any())).thenReturn(null);
     }
@@ -74,7 +78,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void addUser_newUserRequestIsValid_userId(){
+    public void addUser_newUserRequestIsValid_userId() throws InvalidNewUserException {
 
         String userId = userService.addUser(testNewUser);
         assertEquals(userId, testUser.getId());
