@@ -8,6 +8,7 @@
         >
           <v-btn
             text
+            :to="{ name: 'CreatePost'}" 
           >
           New Post
           </v-btn>

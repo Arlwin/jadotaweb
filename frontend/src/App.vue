@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar
+    <NavBar/>
+
+    <!-- <v-app-bar
       app
       color="primary"
       dense
@@ -39,7 +41,7 @@
       >
         <span class="px-3">Sign-In</span>
       </v-btn>
-    </v-app-bar>
+    </v-app-bar> -->
 
     <v-main>
       <v-container fluid>
@@ -63,11 +65,13 @@ import { mapState } from 'pinia'
 
 import { userStore } from '@/stores/UserStore'
 import SignInDialog from './components/auth/SignInDialog.vue';
+import NavBar from './components/NavBar.vue';
 
 export default {
   name: 'App',
   components: {
     SignInDialog,
+    NavBar,
   },
   data: () => ({
     signInDialog: false,
