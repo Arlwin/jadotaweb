@@ -125,6 +125,10 @@ export default {
   },
   props: {
     value: Boolean,
+    signUpState:  {
+      type: Boolean,
+      default: false
+    },
   },
   data: function() {
 
@@ -132,7 +136,6 @@ export default {
   
     return {
 
-      signUpState: false,
       signUp: {
 
         header: "Sign Up",
