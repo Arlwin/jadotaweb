@@ -1,8 +1,45 @@
 <template>
     <v-container
         class="d-flex flex-column pa-5"
-    >
+    >   
         <v-card
+            v-if="isUserLoggedIn"
+            class="d-flex flex-column rounded-lg"
+            width="100%"
+            outlined
+        >
+            <v-container>
+                <v-row class="flex-column align-center">   
+                    <v-img
+                        class="red darken-3"
+                        width="100%"
+                        height="130"
+                    >
+                    </v-img>
+                    <v-avatar
+                        class="mt-n9 avatar"
+                        size="75"
+                        color="primary"
+                    >
+                        AJ
+                    </v-avatar>
+                    <span class="my-4 text-h5">
+                        {{ currentUser['username'] }}
+                    </span>
+                </v-row>
+                <v-row 
+                    v-for="details in account_details"
+                    :key="details.label"
+                    class="px-5 my-4 justify-space-between"
+                >
+                    <span>{{ details.label }}</span>
+                    <a href>{{ details.value }}</a>
+                </v-row>
+                
+            </v-container>
+        </v-card>
+        <v-card
+            v-else
             class="d-flex flex-column pa-5"
             width="100%"
             outlined
@@ -24,6 +61,8 @@
                 SIGN UP
             </v-btn>
         </v-card>
+
+        <!-- Filters -->
         <v-card
             class="d-flex flex-column my-16 rounded-lg"
             width="100%"
@@ -62,7 +101,18 @@
     </v-container>
 </template>
 
+<style scoped>
+.avatar {
+
+    border: 2px #3A3238 solid !important;
+}
+
+</style>
+
 <script>
+import { mapState } from 'pinia'
+import { userStore } from '@/stores/UserStore'
+
 import SignInDialog from './auth/SignInDialog.vue';
 
 export default {
@@ -98,7 +148,28 @@ export default {
                     name: 'ALL TIME'
                 },
             ],
+            account_details: [
+                {
+                    label: 'Following',
+                    value: '1.2K',
+                },
+                {
+                    label: 'Followers',
+                    value: '1.1K',
+                },
+                {
+                    label: 'Heroes Submitted',
+                    value: '12',
+                },
+                {
+                    label: 'Hero Liked',
+                    value: '1.5K',
+                },
+            ]
         }
+    },
+    computed: {
+        ...mapState(userStore, ['currentUser', 'isUserLoggedIn']),
     },
     methods: {
         signIn () {

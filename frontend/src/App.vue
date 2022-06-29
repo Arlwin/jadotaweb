@@ -1,48 +1,6 @@
 <template>
     <v-app>
         <NavBar/>
-
-    <!-- <v-app-bar
-      app
-      color="primary"
-      dense
-      flat
-      dark
-      class="px-7"
-    >
-
-      <v-app-bar-title>
-        <v-btn text v-ripple="false" :to="{ name: 'Home' }" class="no-hover">
-          <span class="text-h5">J</span>
-          <span class="text-overline">ust </span>
-          <span class="text-h5">A</span>
-          <span class="text-overline">nother </span>
-          <span class="text-h5 font-weight-bold red--text text--lighten-2">DOTA </span>
-          <span class="text-h5">W</span>
-          <span class="text-overline">ebsite</span>
-        </v-btn>
-      </v-app-bar-title>
-
-      <v-spacer></v-spacer>
-
-      <v-btn v-if="isUserLoggedIn" 
-        text 
-        v-ripple="false" 
-        class="no-hover" 
-        @click.stop="logout"
-      >
-        <span class="px-3">{{ currentUser['username'] }}</span>
-      </v-btn>
-      <v-btn v-else 
-        text 
-        @click.stop="signInDialog = true" 
-        v-ripple="false" 
-        class="no-hover" 
-      >
-        <span class="px-3">Sign-In</span>
-      </v-btn>
-    </v-app-bar> -->
-
             <v-main>
                 <v-container
                     class="mx-2 px-16 my-6 py-12"

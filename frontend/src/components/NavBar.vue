@@ -7,7 +7,6 @@
         dark
         class="px-7"
     >
-
         <v-container>
             <v-row
                 no-gutters
@@ -47,8 +46,6 @@
                         dense
                         hide-details                        
                     ></v-text-field>
-                    <!-- <v-spacer/> -->
-
                     <v-icon
                         class="mx-6"
                         large    
