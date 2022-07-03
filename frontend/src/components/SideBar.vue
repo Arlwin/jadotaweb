@@ -11,13 +11,13 @@
             <v-container>
                 <v-row class="flex-column align-center">   
                     <v-img
-                        class="red darken-3"
+                        class="red darken-3 rounded-t-lg"
                         width="100%"
                         height="130"
                     >
                     </v-img>
                     <v-avatar
-                        class="mt-n9 avatar"
+                        class="mt-n9 avatar-class"
                         size="75"
                         color="primary"
                     >
@@ -102,11 +102,10 @@
 </template>
 
 <style scoped>
-.avatar {
+.avatar-class {
 
     border: 2px #3A3238 solid !important;
 }
-
 </style>
 
 <script>

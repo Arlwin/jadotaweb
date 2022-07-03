@@ -46,12 +46,18 @@
                         dense
                         hide-details                        
                     ></v-text-field>
-                    <v-icon
-                        class="mx-6"
-                        large    
+                    <v-btn
+                        :to="{ name: 'CreatePost'}"
+                        text
+                        icon
                     >
-                        mdi-plus
-                    </v-icon>
+                        <v-icon
+                            class="mx-6"
+                            large
+                        >
+                            mdi-plus
+                        </v-icon>
+                    </v-btn>
                 </v-col>
             </v-row>
         </v-container>
