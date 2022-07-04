@@ -10,48 +10,34 @@
                         <v-col 
                             class="d-flex justify-center"
                             cols = 3
-                        >
-                            <SideBar/>
+                        >   
+                            <SideBar class="fixed"/>
                         </v-col>
-                        <v-col cols = 9>
-                            <!-- <router-view /> -->
-                            <v-card
-                            >
-                                <v-skeleton-loader
-                                    v-if="feed_data_loading"
-                                    class="mx-auto"
-                                    type="list-item-avatar-two-line, image, article"
-                                ></v-skeleton-loader>
-                            </v-card>  
+                        <v-col
+                            class="overflow" 
+                            cols = 9
+                        >
+                            <router-view />
                         </v-col>
                     </v-row>
                 </v-container>
             </v-main>
-        <SignInDialog v-model="signInDialog" @refresh="refresh"/>
     </v-app>
 </template>
 
 <script>
-import { mapState } from 'pinia'
-
-import { userStore } from '@/stores/UserStore'
-import SignInDialog from './components/auth/SignInDialog.vue';
 import NavBar from './components/NavBar.vue';
 import SideBar from './components/SideBar.vue';
 
 export default {
   name: 'App',
   components: {
-    SignInDialog,
     NavBar,
     SideBar,
   },
   data: () => ({
     signInDialog: false,
   }),
-  computed: {
-    ...mapState(userStore, ['currentUser', 'isUserLoggedIn']),
-  },
   methods: {
     refresh() {
 
@@ -67,8 +53,15 @@ export default {
 </script>
 
 <style scoped>
+
+.fixed {
+
+    position: fixed !important;
+    left: 75px;
+    width: 22vw;
+}
+
 .no-hover::before {
   display: none !important;
 }
-
 </style>

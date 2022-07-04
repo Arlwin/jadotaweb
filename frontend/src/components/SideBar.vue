@@ -1,12 +1,11 @@
 <template>
     <v-container
-        class="d-flex flex-column pa-5"
+        class="d-flex flex-column px-5 py-0"
     >   
         <v-card
             v-if="isUserLoggedIn"
             class="d-flex flex-column rounded-lg"
             width="100%"
-            outlined
         >
             <v-container>
                 <v-row class="flex-column align-center">   
@@ -178,6 +177,10 @@ export default {
         signUp () {
             this.signUpState = true;
             this.signInDialog = true;
+        },
+        refresh () {
+
+            location.reload();
         },
     }
 }
